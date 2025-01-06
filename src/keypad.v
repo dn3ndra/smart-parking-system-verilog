@@ -4,8 +4,8 @@ module keypad(
     input wire [3:0] digit3,       // Digit ketiga
     input wire clk,
     input wire rst,
-    input wire lock_input,         // Sinyal kunci
-    output reg unlock              // Sinyal unlock
+    input wire lock_input,    
+    output reg unlock      
 );
 
     // Password yang benar
@@ -15,21 +15,21 @@ module keypad(
     // Logika untuk unlock
     always @(posedge clk or posedge rst) begin
         if (rst) begin
-            unlock <= 1'b0; // Reset unlock saat rst aktif
+            unlock <= 1'b0; 
         end else if (lock_input) begin
-            // Cek apakah salah satu password cocok
+            
             if ((digit1 == PASSWORD_IN[11:8] && 
                  digit2 == PASSWORD_IN[7:4] && 
                  digit3 == PASSWORD_IN[3:0]) || 
                 (digit1 == PASSWORD_OUT[11:8] && 
                  digit2 == PASSWORD_OUT[7:4] && 
                  digit3 == PASSWORD_OUT[3:0])) begin
-                unlock <= 1'b1; // Aktifkan unlock jika salah satu password cocok
+                unlock <= 1'b1;
             end else begin
-                unlock <= 1'b0; // Matikan unlock jika password salah
+                unlock <= 1'b0; 
             end
         end else begin
-            unlock <= 1'b0; // Jika lock_input tidak aktif, matikan unlock
+            unlock <= 1'b0;
         end
     end
 
